@@ -1,0 +1,118 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:hospital_name",
+ "creation": "2026-06-25 09:41:01.777393",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "hospital_details_section",
+  "hospital_name",
+  "locationaddress_section",
+  "address",
+  "location",
+  "tab_2_tab",
+  "free_rooms",
+  "doctors_tab",
+  "doctors"
+ ],
+ "fields": [
+  {
+   "fieldname": "hospital_details_section",
+   "fieldtype": "Section Break",
+   "label": "Hospital Details"
+  },
+  {
+   "fieldname": "hospital_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Hospital Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "locationaddress_section",
+   "fieldtype": "Section Break",
+   "label": "Location/Address"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Geolocation",
+   "label": "Location"
+  },
+  {
+   "fieldname": "tab_2_tab",
+   "fieldtype": "Tab Break",
+   "label": "Free Rooms"
+  },
+  {
+   "fieldname": "free_rooms",
+   "fieldtype": "Table",
+   "label": "Free Rooms",
+   "options": "Free Rooms"
+  },
+  {
+   "fieldname": "doctors_tab",
+   "fieldtype": "Tab Break",
+   "label": "Doctors"
+  },
+  {
+   "fieldname": "doctors",
+   "fieldtype": "Table",
+   "label": "Doctors",
+   "options": "Doctor List"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "link_doctype": "Patients",
+   "link_fieldname": "hospital"
+  },
+  {
+   "link_doctype": "Doctor",
+   "link_fieldname": "hospital"
+  },
+  {
+   "link_doctype": "Room",
+   "link_fieldname": "hospital"
+  },
+  {
+   "link_doctype": "Nurses",
+   "link_fieldname": "hospital"
+  }
+ ],
+ "modified": "2026-06-25 14:59:28.848397",
+ "modified_by": "Administrator",
+ "module": "Hospital Management",
+ "name": "Hospital",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "hospital_name"
+}
