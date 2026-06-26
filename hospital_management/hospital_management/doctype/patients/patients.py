@@ -23,20 +23,20 @@ class Patients(Document):
 		first_name: DF.Data
 		full_name: DF.Data | None
 		have_allergies: DF.Check
-		hospital: DF.Link | None
+		hospital: DF.Link
 		last_name: DF.Data
 		mothers_name: DF.Data
 		patients_health_problem: DF.SmallText | None
 	# end: auto-generated types
+
 	def validate(self):
 		self.set_full_name()
 		self.set_age()
 		self.set_used()
-     
-     
+
 	def set_full_name(self):
 		self.full_name = self.first_name + " " + self.last_name
-  
+
 	def set_age(self):
 		dob = frappe.utils.getdate(self.date_of_birth)
 		today_date = frappe.utils.getdate(frappe.utils.today())
@@ -44,20 +44,41 @@ class Patients(Document):
 		if (today_date.month, today_date.day) < (dob.month, dob.day):
 			years -= 1
 		self.age = str(years)
-	
+
 	def set_used(self):
-		if not self.assigned_room or not self.is_new():
+		if not self.assigned_room:
 			return
-		room = frappe.get_doc("Room", self.assigned_room)
-		if room.used_beds < room.number_of_beds:
-			room.used_beds += 1
-			room.save()
+
+		if self.is_new():
+			# New patient — just increment the new room
+			room = frappe.get_doc("Room", self.assigned_room)
+			if room.used_beds < room.number_of_beds:
+				room.used_beds += 1
+				room.save()
+			else:
+				frappe.throw("No available beds in the assigned room.")
 		else:
-			frappe.throw("No available beds in the assigned room.")
-      
-    
-    
-    
-    
-    
-	pass
+			# Existing patient — check if assigned_room changed
+			old_doc = self.get_doc_before_save()
+			old_room = old_doc.assigned_room if old_doc else None
+
+			if old_room != self.assigned_room:
+				# Decrement old room
+				if old_room:
+					old_room_doc = frappe.get_doc("Room", old_room)
+					old_room_doc.used_beds = max(0, old_room_doc.used_beds - 1)
+					old_room_doc.save()
+
+				# Increment new room
+				new_room_doc = frappe.get_doc("Room", self.assigned_room)
+				if new_room_doc.used_beds < new_room_doc.number_of_beds:
+					new_room_doc.used_beds += 1
+					new_room_doc.save()
+				else:
+					frappe.throw("No available beds in the assigned room.")
+
+	def on_trash(self):
+		if self.assigned_room:
+			room = frappe.get_doc("Room", self.assigned_room)
+			room.used_beds = max(0, room.used_beds - 1)
+			room.save()

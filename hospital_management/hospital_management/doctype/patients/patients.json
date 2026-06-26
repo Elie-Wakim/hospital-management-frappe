@@ -121,6 +121,7 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval: doc.hospital != null",
    "fieldname": "assigned_room",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -133,12 +134,11 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "assigned_room.hospital",
    "fieldname": "hospital",
    "fieldtype": "Link",
    "label": "Hospital",
    "options": "Hospital",
-   "read_only": 1
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
@@ -149,7 +149,7 @@
    "link_fieldname": "patient"
   }
  ],
- "modified": "2026-06-25 13:28:02.259082",
+ "modified": "2026-06-26 11:19:19.318123",
  "modified_by": "Administrator",
  "module": "Hospital Management",
  "name": "Patients",
