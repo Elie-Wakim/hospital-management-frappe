@@ -86,9 +86,17 @@
   {
    "link_doctype": "Nurses",
    "link_fieldname": "hospital"
+  },
+  {
+   "link_doctype": "Invoice Items",
+   "link_fieldname": "item"
+  },
+  {
+   "link_doctype": "Medical Invoice",
+   "link_fieldname": "hospital"
   }
  ],
- "modified": "2026-06-25 14:59:28.848397",
+ "modified": "2026-06-26 14:32:34.241782",
  "modified_by": "Administrator",
  "module": "Hospital Management",
  "name": "Hospital",

@@ -50,7 +50,6 @@ class Patients(Document):
 			return
 
 		if self.is_new():
-			# New patient — just increment the new room
 			room = frappe.get_doc("Room", self.assigned_room)
 			if room.used_beds < room.number_of_beds:
 				room.used_beds += 1
@@ -58,18 +57,15 @@ class Patients(Document):
 			else:
 				frappe.throw("No available beds in the assigned room.")
 		else:
-			# Existing patient — check if assigned_room changed
 			old_doc = self.get_doc_before_save()
 			old_room = old_doc.assigned_room if old_doc else None
 
 			if old_room != self.assigned_room:
-				# Decrement old room
 				if old_room:
 					old_room_doc = frappe.get_doc("Room", old_room)
 					old_room_doc.used_beds = max(0, old_room_doc.used_beds - 1)
 					old_room_doc.save()
 
-				# Increment new room
 				new_room_doc = frappe.get_doc("Room", self.assigned_room)
 				if new_room_doc.used_beds < new_room_doc.number_of_beds:
 					new_room_doc.used_beds += 1
