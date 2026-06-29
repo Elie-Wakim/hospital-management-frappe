@@ -6,6 +6,9 @@ frappe.ui.form.on("Patients", {
         frm.set_query("assigned_room", () => ({
             filters: { hospital: frm.doc.hospital }
         }));
+        frm.set_query("assigned_doctor", () => ({
+               filters: { hospital: frm.doc.hospital }
+           }));
     }
 });
 

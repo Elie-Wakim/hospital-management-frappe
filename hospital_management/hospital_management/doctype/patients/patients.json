@@ -113,6 +113,7 @@
    "label": "Assigned doc/room"
   },
   {
+   "depends_on": "eval: doc.hospital != null",
    "fieldname": "assigned_doctor",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -149,7 +150,7 @@
    "link_fieldname": "patient"
   }
  ],
- "modified": "2026-06-26 11:19:19.318123",
+ "modified": "2026-06-29 10:53:40.072565",
  "modified_by": "Administrator",
  "module": "Hospital Management",
  "name": "Patients",
